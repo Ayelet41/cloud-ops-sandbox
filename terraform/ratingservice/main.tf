@@ -91,6 +91,7 @@ locals {
   service_name    = "ratingservice"
   service_version = "prod"
   source_path     = "${path.root}/../src/ratingservice"
+  module_path     = "${path.root}/ratingservice"
 }
 
 resource "google_storage_bucket" "it" {
@@ -118,7 +119,7 @@ resource "google_storage_bucket_object" "default_main" {
 }
 
 data "external" "app_engine_state" {
-  program = ["${path.module}/setup_app_engine.sh", var.gcp_project_id]
+  program = ["${local.module_path}/setup_app_engine.sh", var.gcp_project_id]
 }
 
 resource "google_app_engine_application" "app" {

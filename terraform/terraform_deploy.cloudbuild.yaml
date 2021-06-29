@@ -22,7 +22,7 @@
 #
 # IAM
 # The Cloud Build service account must be granted the roles: 
-#  "Service Usage Admin", "Kubernetes Engine Cluster Admin"
+#  "Service Usage Admin", "Kubernetes Engine Admin", "Cloud SQL Admin"
 # ---------------------------------------
 
 steps:
