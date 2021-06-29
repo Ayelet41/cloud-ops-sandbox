@@ -18,3 +18,5 @@ terraform/istio/istio-*/**
 .token
 skaffold
 website/resources*
+**/*.tfvars
+**/.terraform.lock.hcl
