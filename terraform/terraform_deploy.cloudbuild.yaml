@@ -36,7 +36,7 @@ steps:
       echo ""
       echo "*************** TERRAFORM INIT ******************"
       echo "*************************************************"
-      terraform -chdir=terraform init -backend-config=bucket=$_TF_STATE_BUCKET
+      terraform init -backend-config=bucket=$_TF_STATE_BUCKET
 
 # [START tf-apply]
 - id: 'tf apply'
@@ -45,6 +45,6 @@ steps:
   args: 
   - '-c'
   - | 
-      terraform -chdir=terraform apply -auto-approve -var="project_id=${PROJECT_ID}" -var="bucket_name=$_TF_STATE_BUCKET"
+      terraform apply -auto-approve -var="project_id=${PROJECT_ID}" -var="bucket_name=$_TF_STATE_BUCKET"
 
 # [END tf-apply]
