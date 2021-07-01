@@ -15,10 +15,14 @@
 # ---------------------------------------
 # PREREQUISITES (TODO: document this)
 #
+# Required Builder: tf-gcloud
+# This build config uses a custom builder image in Cloud Build;
+# before invoking builds, publish the builder to your project,
+# by following the directions in the `cloudbuild-builder` folder.
+#
 # Required APIs
 # the following APIs must be enabled prior to using this build config:
-# cloudresourcemanager.googleapis.com, cloudbilling.googleapis.com,
-# sqladmin.googleapis.com
+# cloudresourcemanager.googleapis.com, sqladmin.googleapis.com
 #
 # IAM
 # The Cloud Build service account must be granted the roles: 
@@ -28,24 +32,23 @@
 steps:
 
 - id: 'tf init'
-  name: 'hashicorp/terraform:1.0.0'
-  entrypoint: 'sh'
+  name: 'gcr.io/$PROJECT_ID/tf-gcloud'
+  entrypoint: '/bin/bash'
   args: 
   - '-c'
   - |
       echo ""
       echo "*************** TERRAFORM INIT ******************"
       echo "*************************************************"
-      terraform init -backend-config=bucket=$_TF_STATE_BUCKET
+      terraform -chdir="terraform" init -backend-config=bucket=$_TF_STATE_BUCKET
 
 # [START tf-apply]
 - id: 'tf apply'
-  name: 'hashicorp/terraform:1.0.0'
-  entrypoint: 'sh'
+  name: 'gcr.io/$PROJECT_ID/tf-gcloud'
+  entrypoint: '/bin/bash'
   args: 
   - '-c'
   - | 
-      type jq || apk add jq   # jq is used by external "data" resource scripts
-      terraform apply -auto-approve -var="project_id=${PROJECT_ID}" -var="bucket_name=$_TF_STATE_BUCKET"
+      terraform -chdir="terraform" apply -auto-approve -var="project_id=${PROJECT_ID}" -var="bucket_name=$_TF_STATE_BUCKET"
 
 # [END tf-apply]
