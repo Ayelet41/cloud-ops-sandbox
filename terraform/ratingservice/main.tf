@@ -119,7 +119,7 @@ resource "google_storage_bucket_object" "default_main" {
 }
 
 data "external" "app_engine_state" {
-  program = ["${path.module}/setup_app_engine.sh", var.gcp_project_id]
+  program = ["sh","${path.module}/setup_app_engine.sh", var.gcp_project_id]
 }
 
 resource "google_app_engine_application" "app" {

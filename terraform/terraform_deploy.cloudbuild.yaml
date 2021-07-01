@@ -45,6 +45,7 @@ steps:
   args: 
   - '-c'
   - | 
+      type jq || apk add jq   # jq is used by external "data" resource scripts
       terraform apply -auto-approve -var="project_id=${PROJECT_ID}" -var="bucket_name=$_TF_STATE_BUCKET"
 
 # [END tf-apply]
