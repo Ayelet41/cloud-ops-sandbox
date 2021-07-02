@@ -52,3 +52,5 @@ steps:
       terraform -chdir="terraform" apply -auto-approve -var="project_id=${PROJECT_ID}" -var="bucket_name=$_TF_STATE_BUCKET"
 
 # [END tf-apply]
+
+timeout: 3600s
